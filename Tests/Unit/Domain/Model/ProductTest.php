@@ -27,6 +27,7 @@ namespace Pixelant\PxaProductManager\Tests\Unit\Domain\Model;
 
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use Pixelant\PxaProductManager\Domain\Model\AttributeSet;
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use Pixelant\PxaProductManager\Domain\Model\Attribute;
 use Pixelant\PxaProductManager\Domain\Model\AttributeValue;
@@ -1337,6 +1338,71 @@ class ProductTest extends UnitTestCase
         self::assertEquals(
             $value,
             $this->fixture->getTaxRate()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function getAttributeSetReturnsInitialForAttributeSet()
+    {
+        $objectStorage = new ObjectStorage();
+
+        self::assertEquals(
+            $objectStorage,
+            $this->fixture->getAttributeSets()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function setAttributeSetForObjectStorageContainsAttributeSetForAttibuteSets()
+    {
+        $objectStorageWithOneAttribute = new ObjectStorage();
+
+        $attribute = new AttributeSet();
+        $objectStorageWithOneAttribute->attach($attribute);
+        $this->fixture->setAttributeSets($objectStorageWithOneAttribute);
+
+        self::assertSame(
+            $objectStorageWithOneAttribute,
+            $this->fixture->getAttributeSets()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function addAttributeSetToObjectStorageHoldingAttributeSet()
+    {
+        $attribute = new AttributeSet();
+        $objectStorageWithOneAttribute = new ObjectStorage();
+        $objectStorageWithOneAttribute->attach($attribute);
+
+        $this->fixture->addAttributeSet($attribute);
+
+        self::assertEquals(
+            $objectStorageWithOneAttribute,
+            $this->fixture->getAttributeSets()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function removeAttributeSetFromObjectStorageHoldingAttributeSets()
+    {
+        $attribute = new AttributeSet();
+        $objectStorageWithOneAttribute = new ObjectStorage();
+        $objectStorageWithOneAttribute->attach($attribute);
+        $objectStorageWithOneAttribute->detach($attribute);
+        $this->fixture->addAttributeSet($attribute);
+        $this->fixture->removeAttributeSet($attribute);
+
+        self::assertEquals(
+            $objectStorageWithOneAttribute,
+            $this->fixture->getAttributeSets()
         );
     }
 }

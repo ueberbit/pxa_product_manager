@@ -31,13 +31,14 @@ return (function () {
         ],
         // @codingStandardsIgnoreStart
         'interface' => [
-            'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, slug, sku, price, tax_rate, teaser, description, usp, additional_information, attributes_description, disable_single_view, related_products, images, links, fal_links, sub_products,meta_description, keywords, alternative_title, path_segment, serialized_attributes_values, attribute_values',
+            'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, name, slug, sku, price, tax_rate, teaser, description, usp, additional_information, attributes_description, disable_single_view, related_products, images, links, fal_links, sub_products,meta_description, keywords, alternative_title, path_segment, serialized_attributes_values, attribute_values, attribute_sets',
         ],
 
         'types' => [
             '1' => [
                 'showitem' => 'sys_language_uid,l10n_parent,l10n_diffsource,hidden,--palette--;;1,name, slug, sku, price, tax_rate, teaser, description, usp, additional_information, attributes_description, launched, discontinued, custom_sorting,
 --div--;' . $llCore . 'locallang_tca.xlf:sys_category.tabs.category, categories,
+--div--;' . $ll . 'tx_pxaproductmanager_domain_model_product.attributes_tab,attribute_sets,
 --palette--;;paletteAttributes,
 --div--;' . $ll . 'tx_pxaproductmanager_domain_model_product.tab.images, images,
 --div--;' . $ll . 'tx_pxaproductmanager_domain_model_product.tab.assets, assets,
@@ -714,7 +715,35 @@ return (function () {
                     'size' => 13,
                     'default' => 0,
                 ],
-            ]
+            ],
+            'attribute_sets' => [
+                'exclude' => 0,
+                'label' => $ll . 'tx_pxaproductmanager_domain_model_product.attribute_sets',
+                'onChange' => 'reload',
+                'config' => [
+                    'type' => 'select',
+                    'renderType' => 'selectMultipleSideBySide',
+                    'foreign_table' => 'tx_pxaproductmanager_domain_model_attributeset',
+                    // @codingStandardsIgnoreStart
+                    'foreign_table_where' =>  \Pixelant\PxaProductManager\Utility\TCAUtility::getAttributesSetsForeignTableWherePid() .
+                        ' AND tx_pxaproductmanager_domain_model_attributeset.sys_language_uid IN (-1,0)' .
+                        ' ORDER BY tx_pxaproductmanager_domain_model_attributeset.sorting',
+                    // @codingStandardsIgnoreEnd
+                    'MM' => 'tx_pxaproductmanager_product_attributeset_mm',
+                    'size' => 10,
+                    'autoSizeMax' => 30,
+                    'maxitems' => 9999,
+                    'multiple' => 0,
+                    'fieldControl' => [
+                        'editPopup' => [
+                            'disabled' => false
+                        ],
+                        'addRecord' => [
+                            'disabled' => false,
+                        ]
+                    ]
+                ]
+            ],
         ]
     ];
 })();

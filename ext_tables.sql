@@ -34,6 +34,7 @@ CREATE TABLE tx_pxaproductmanager_domain_model_product (
   usp text,
   custom_sorting int(11) DEFAULT '0' NOT NULL,
   slug varchar(2048),
+  attribute_sets int(11) unsigned DEFAULT '0' NOT NULL,
 
   tstamp int(11) unsigned DEFAULT '0' NOT NULL,
   crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -315,7 +316,6 @@ CREATE TABLE sys_category (
   keywords text,
   meta_description text,
   pxapm_subcategories int(11) unsigned DEFAULT '0',
-  pxapm_attributes_sets int(11) unsigned DEFAULT '0' NOT NULL,
   pxapm_description text,
   pxapm_banner_image int(11) unsigned DEFAULT '0',
   pxapm_card_view_template varchar(255) DEFAULT '' NOT NULL,
@@ -349,9 +349,9 @@ CREATE TABLE tx_pxaproductmanager_attributeset_attribute_mm (
 );
 
 #
-# Table structure for table 'tx_pxaproductmanager_product_category_mm'
+# Table structure for table 'tx_pxaproductmanager_product_attributeset_mm'
 #
-CREATE TABLE tx_pxaproductmanager_category_attributeset_mm (
+CREATE TABLE tx_pxaproductmanager_product_attributeset_mm (
   uid_local int(11) unsigned DEFAULT '0' NOT NULL,
   uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
   sorting int(11) unsigned DEFAULT '0' NOT NULL,

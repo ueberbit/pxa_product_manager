@@ -30,6 +30,9 @@ namespace Pixelant\PxaProductManager\Utility;
 use Pixelant\PxaProductManager\Domain\Model\Attribute;
 use Pixelant\PxaProductManager\Domain\Model\AttributeSet;
 use Pixelant\PxaProductManager\Domain\Model\Category;
+use Pixelant\PxaProductManager\Domain\Repository\ProductRepository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
@@ -72,48 +75,46 @@ class AttributeHolderUtility
         $uniqueAttributesList = [];
         $uniqueAttributeSetsList = [];
 
-        $categories = ProductUtility::getProductCategoriesParentsTree($productUid, true);
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $product = $objectManager->get(ProductRepository::class)->findByUid($productUid);
 
         /**
          * Find all attribute sets and it unique attributes
          */
-        /** @var Category $category */
-        foreach ($categories as $category) {
-            /** @var AttributeSet $attributesSet */
-            foreach ($category->getAttributeSets() as $attributesSet) {
-                if (in_array($attributesSet->getUid(), $uniqueAttributeSetsList, true)) {
-                    continue;
-                } else {
-                    $uniqueAttributeSetsList[] = $attributesSet->getUid();
-                }
-
-                $currentSetAttributes = new ObjectStorage();
-
-                /** @var Attribute $attribute */
-                foreach ($attributesSet->getAttributes() as $attribute) {
-                    if (!in_array($attribute->getUid(), $uniqueAttributesList, true)
-                        && (
-                            !$onlyMarkedForShowInListing
-                            || $onlyMarkedForShowInListing && $attribute->isShowInAttributeListing()
-                        )
-                    ) {
-                        // Make sure to use different instances for different products
-                        $attributeClone = clone $attribute;
-                        // save to current set
-                        $currentSetAttributes->attach($attributeClone);
-                        // save in all
-                        $this->attributes->attach($attributeClone);
-                        // save in list
-                        $uniqueAttributesList[] = $attribute->getUid();
-                    }
-                }
-
-                // Save generated attribute set
-                $attributesSetClone = clone $attributesSet;
-                $attributesSetClone->setAttributes($currentSetAttributes);
-
-                $this->attributeSets->attach($attributesSetClone);
+        /** @var AttributeSet $attributesSet */
+        foreach ($product->getAttributeSets() as $attributesSet) {
+            if (in_array($attributesSet->getUid(), $uniqueAttributeSetsList, true)) {
+                continue;
+            } else {
+                $uniqueAttributeSetsList[] = $attributesSet->getUid();
             }
+
+            $currentSetAttributes = new ObjectStorage();
+
+            /** @var Attribute $attribute */
+            foreach ($attributesSet->getAttributes() as $attribute) {
+                if (!in_array($attribute->getUid(), $uniqueAttributesList, true)
+                    && (
+                        !$onlyMarkedForShowInListing
+                        || $onlyMarkedForShowInListing && $attribute->isShowInAttributeListing()
+                    )
+                ) {
+                    // Make sure to use different instances for different products
+                    $attributeClone = clone $attribute;
+                    // save to current set
+                    $currentSetAttributes->attach($attributeClone);
+                    // save in all
+                    $this->attributes->attach($attributeClone);
+                    // save in list
+                    $uniqueAttributesList[] = $attribute->getUid();
+                }
+            }
+
+            // Save generated attribute set
+            $attributesSetClone = clone $attributesSet;
+            $attributesSetClone->setAttributes($currentSetAttributes);
+
+            $this->attributeSets->attach($attributesSetClone);
         }
     }
 
