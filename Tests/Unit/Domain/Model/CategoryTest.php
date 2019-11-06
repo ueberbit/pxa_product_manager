@@ -28,7 +28,6 @@ use Nimut\TestingFramework\TestCase\UnitTestCase;
 use Pixelant\PxaProductManager\Domain\Model\Category;
 use Pixelant\PxaProductManager\Domain\Model\Image;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use Pixelant\PxaProductManager\Domain\Model\AttributeSet;
 
 /**
  * Test case for class \Pixelant\PxaProductManager\Domain\Model\Category.
@@ -169,71 +168,6 @@ class CategoryTest extends UnitTestCase
         self::assertEquals(
             $deleted,
             $this->fixture->getDeleted()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function getAttributeSetReturnsInitialForAttributeSet()
-    {
-        $objectStorage = new ObjectStorage();
-
-        self::assertEquals(
-            $objectStorage,
-            $this->fixture->getAttributeSets()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function setAttributeSetForObjectStorageContainsAttributeSetForAttibuteSets()
-    {
-        $objectStorageWithOneAttribute = new ObjectStorage();
-
-        $attribute = new AttributeSet();
-        $objectStorageWithOneAttribute->attach($attribute);
-        $this->fixture->setAttributeSets($objectStorageWithOneAttribute);
-
-        self::assertSame(
-            $objectStorageWithOneAttribute,
-            $this->fixture->getAttributeSets()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function addAttributeSetToObjectStorageHoldingAttributeSet()
-    {
-        $attribute = new AttributeSet();
-        $objectStorageWithOneAttribute = new ObjectStorage();
-        $objectStorageWithOneAttribute->attach($attribute);
-
-        $this->fixture->addAttributeSet($attribute);
-
-        self::assertEquals(
-            $objectStorageWithOneAttribute,
-            $this->fixture->getAttributeSets()
-        );
-    }
-
-    /**
-     * @test
-     */
-    public function removeAttributeSetFromObjectStorageHoldingAttributeSets()
-    {
-        $attribute = new AttributeSet();
-        $objectStorageWithOneAttribute = new ObjectStorage();
-        $objectStorageWithOneAttribute->attach($attribute);
-        $objectStorageWithOneAttribute->detach($attribute);
-        $this->fixture->addAttributeSet($attribute);
-        $this->fixture->removeAttributeSet($attribute);
-
-        self::assertEquals(
-            $objectStorageWithOneAttribute,
-            $this->fixture->getAttributeSets()
         );
     }
 

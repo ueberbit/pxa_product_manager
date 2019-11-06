@@ -116,33 +116,6 @@ call_user_func(function () {
                 ]
             ]
         ],
-        'pxapm_attributes_sets' => [
-            'exclude' => 0,
-            'label' => $ll . 'sys_category.pxapm_attributes_sets',
-            'config' => [
-                'type' => 'select',
-                'renderType' => 'selectMultipleSideBySide',
-                'foreign_table' => 'tx_pxaproductmanager_domain_model_attributeset',
-                // @codingStandardsIgnoreStart
-                'foreign_table_where' =>  \Pixelant\PxaProductManager\Utility\TCAUtility::getAttributesSetsForeignTableWherePid() .
-                    ' AND tx_pxaproductmanager_domain_model_attributeset.sys_language_uid IN (-1,0)' .
-                    ' ORDER BY tx_pxaproductmanager_domain_model_attributeset.sorting',
-                // @codingStandardsIgnoreEnd
-                'MM' => 'tx_pxaproductmanager_category_attributeset_mm',
-                'size' => 10,
-                'autoSizeMax' => 30,
-                'maxitems' => 9999,
-                'multiple' => 0,
-                'fieldControl' => [
-                    'editPopup' => [
-                        'disabled' => false
-                    ],
-                    'addRecord' => [
-                        'disabled' => false,
-                    ]
-                ]
-            ]
-        ],
         'pxapm_description' => [
             'exclude' => 0,
             'label' => $ll . 'sys_category.pxapm_description',
@@ -344,15 +317,6 @@ call_user_func(function () {
         pxapm_description',
         '',
         'after:items'
-    );
-
-    // Attributes
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
-        'sys_category',
-        '--div--;' . $ll . 'sys_category.attributes_tab,
-        pxapm_attributes_sets',
-        '',
-        'after:pxapm_description'
     );
 
     // Subcategories

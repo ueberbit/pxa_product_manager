@@ -296,6 +296,14 @@ class Product extends AbstractEntity
     protected $customSorting = 0;
 
     /**
+     * Attribute sets
+     *
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Pixelant\PxaProductManager\Domain\Model\AttributeSet>
+     */
+    protected $attributeSets;
+
+    /**
      * __construct
      *
      */
@@ -336,6 +344,8 @@ class Product extends AbstractEntity
         $this->assets = new ObjectStorage();
 
         $this->accessories = new ObjectStorage();
+
+        $this->attributeSets = new ObjectStorage();
     }
 
     /**
@@ -1619,5 +1629,50 @@ class Product extends AbstractEntity
             $this->attributes->attach($attribute);
             $this->attributesIdentifiersArray[$attribute->getIdentifier() ?: $attribute->getUid()] = $attribute;
         }
+    }
+
+    /**
+     * Returns the Attributes
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Pixelant\PxaProductManager\Domain\Model\AttributeSet>
+     */
+    public function getAttributeSets(): ObjectStorage
+    {
+        return $this->attributeSets;
+    }
+
+    // @codingStandardsIgnoreStart
+    /**
+     * Sets the Attributes
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Pixelant\PxaProductManager\Domain\Model\AttributeSet> $attributeSets
+     * @return void
+     */
+    // @codingStandardsIgnoreEnd
+    public function setAttributeSets(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $attributeSets)
+    {
+        $this->attributeSets = $attributeSets;
+    }
+
+    /**
+     * Adds a pxapmAttribute
+     *
+     * @param \Pixelant\PxaProductManager\Domain\Model\AttributeSet $attributeSet
+     * @return void
+     */
+    public function addAttributeSet(\Pixelant\PxaProductManager\Domain\Model\AttributeSet $attributeSet)
+    {
+        $this->attributeSets->attach($attributeSet);
+    }
+
+    /**
+     * Removes a AttributeSet
+     *
+     * @param \Pixelant\PxaProductManager\Domain\Model\AttributeSet $attributeSet
+     * @return void
+     */
+    public function removeAttributeSet(\Pixelant\PxaProductManager\Domain\Model\AttributeSet $attributeSet)
+    {
+        $this->attributeSets->detach($attributeSet);
     }
 }

@@ -85,14 +85,6 @@ class Category extends CategoryExtbase
     protected $deleted;
 
     /**
-     * Attribute sets
-     *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Pixelant\PxaProductManager\Domain\Model\AttributeSet>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
-     */
-    protected $attributeSets;
-
-    /**
      * Banner Image
      *
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference
@@ -169,7 +161,6 @@ class Category extends CategoryExtbase
          * It will be rewritten on each save in the extension builder
          * You may modify the constructor of this class instead
          */
-        $this->attributeSets = new ObjectStorage();
         $this->subCategories = new ObjectStorage();
     }
 
@@ -318,51 +309,6 @@ class Category extends CategoryExtbase
     public function setDeleted(bool $deleted)
     {
         $this->deleted = $deleted;
-    }
-
-    /**
-     * Returns the Attributes
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Pixelant\PxaProductManager\Domain\Model\AttributeSet>
-     */
-    public function getAttributeSets(): ObjectStorage
-    {
-        return $this->attributeSets;
-    }
-
-    // @codingStandardsIgnoreStart
-    /**
-     * Sets the Attributes
-     *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Pixelant\PxaProductManager\Domain\Model\AttributeSet> $attributeSets
-     * @return void
-     */
-    // @codingStandardsIgnoreEnd
-    public function setAttributeSets(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $attributeSets)
-    {
-        $this->attributeSets = $attributeSets;
-    }
-
-    /**
-     * Adds a pxapmAttribute
-     *
-     * @param \Pixelant\PxaProductManager\Domain\Model\AttributeSet $attributeSet
-     * @return void
-     */
-    public function addAttributeSet(\Pixelant\PxaProductManager\Domain\Model\AttributeSet $attributeSet)
-    {
-        $this->attributeSets->attach($attributeSet);
-    }
-
-    /**
-     * Removes a AttributeSet
-     *
-     * @param \Pixelant\PxaProductManager\Domain\Model\AttributeSet $attributeSet
-     * @return void
-     */
-    public function removeAttributeSet(\Pixelant\PxaProductManager\Domain\Model\AttributeSet $attributeSet)
-    {
-        $this->attributeSets->detach($attributeSet);
     }
 
     /**

@@ -90,6 +90,12 @@
             <trans-unit id="tx_pxaproductmanager_domain_model_product.custom_sorting">
                 <source>Custom Sorting</source>
             </trans-unit>
+            <trans-unit id="tx_pxaproductmanager_domain_model_product.attributes_tab">
+                <source>Product attributes</source>
+            </trans-unit>
+            <trans-unit id="tx_pxaproductmanager_domain_model_product.attribute_sets">
+                <source>Attribute Sets</source>
+            </trans-unit>
             <!--Products TCA:END-->
 
             <!--Attributes Set TCA:START-->
@@ -352,17 +358,11 @@
             <trans-unit id="sys_category.pxapm_image.create">
                 <source>Add image</source>
             </trans-unit>
-            <trans-unit id="sys_category.pxapm_attributes_sets">
-                <source>Attribute Sets</source>
-            </trans-unit>
             <trans-unit id="sys_category.pxapm_description">
                 <source>Description</source>
             </trans-unit>
             <trans-unit id="sys_category.additional_fields_tab">
                 <source>Products category information</source>
-            </trans-unit>
-            <trans-unit id="sys_category.attributes_tab">
-                <source>Product attributes</source>
             </trans-unit>
             <trans-unit id="sys_category.metadata_tab">
                 <source>Metadata</source>

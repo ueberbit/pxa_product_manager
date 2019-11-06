@@ -16,7 +16,4 @@ call_user_func(function () {
             ]
         ]
     );
-
-    $columns = &$GLOBALS['TCA']['tx_pxaproductmanager_domain_model_product']['columns'];
-    $columns['categories']['onChange'] = 'reload';
 });
